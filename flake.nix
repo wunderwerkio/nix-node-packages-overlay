@@ -7,7 +7,7 @@
     ...
   }: let
     pnpmOverlay = import ./overlays/pnpm.nix;
-    vercelOverlay = import ./overlays/vercel.nix;
+    vercelOverlay = import ./overlays/vercel;
   in {
     overlays = {
       pnpm = pnpmOverlay;

@@ -1,0 +1,20 @@
+name: Update Overlays
+
+on:
+  workflow_dispatch:
+
+jobs:
+  update-overlays:
+    name: Update Overlays
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: cachix/install-nix-action@v22
+
+      - run: sh scripts/update-pnpm.sh
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: "chore: update overlays"
+          branch: release/update-overlays

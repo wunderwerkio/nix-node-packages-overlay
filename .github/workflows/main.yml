@@ -1,0 +1,27 @@
+name: Update Overlays
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 0,12 * * *'
+
+jobs:
+  update-overlays:
+    name: Update pnpm
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: cachix/install-nix-action@v22
+
+      - id: update
+        run: sh scripts/update-pnpm.sh
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        if: ${{ steps.update.outputs.VERSION }} != null
+        with:
+          commit-message: "chore: update pnpm to ${{ steps.update.outputs.VERSION }}"
+          branch: release/update-pnpm-overlay
+          title: Update pnpm to ${{ steps.update.outputs.VERSION }}
+          body: |
+            Update pnpm package to latest version: [${{ steps.update.outputs.VERSION }}](https://www.npmjs.com/package/pnpm/v/${{ steps.update.outputs.VERSION }})

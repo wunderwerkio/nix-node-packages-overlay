@@ -1,5 +1,5 @@
 final: prev: let
-  version = "8.12.0";
+  version = "8.12.1";
   sha256 = "sha256-VT5OsOKiyavLQZsyYr3HruiuPELiMBoYB9RFdXhhYMk=";
   lib = import ../lib {pkgs = prev;};
 in
